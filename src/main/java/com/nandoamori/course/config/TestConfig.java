@@ -1,14 +1,8 @@
 package com.nandoamori.course.config;
 
-import com.nandoamori.course.entities.Category;
-import com.nandoamori.course.entities.Order;
-import com.nandoamori.course.entities.Product;
-import com.nandoamori.course.entities.User;
+import com.nandoamori.course.entities.*;
 import com.nandoamori.course.entities.enums.OrderStatus;
-import com.nandoamori.course.repository.CategoryRepository;
-import com.nandoamori.course.repository.OrderRepository;
-import com.nandoamori.course.repository.ProductRepository;
-import com.nandoamori.course.repository.UserRepository;
+import com.nandoamori.course.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +22,8 @@ public class TestConfig implements CommandLineRunner {
     private CategoryRepository categoryRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -62,7 +58,11 @@ public class TestConfig implements CommandLineRunner {
         Order o3 = new Order(null, Instant.parse("2019-07-22T15:21:22Z"), OrderStatus.DELIVERED, u1);
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
 
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p3, 2, p3.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 
-
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
     }
 }
