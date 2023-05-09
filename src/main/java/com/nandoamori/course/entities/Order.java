@@ -3,9 +3,6 @@ package com.nandoamori.course.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nandoamori.course.entities.enums.OrderStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -86,6 +83,13 @@ public class Order implements Serializable {
         this.payment = payment;
     }
 
+    public Double getTotal(){
+        double sum = 0.0;
+        for (OrderItem item : items ) {
+            sum += item.getSubtotal();
+        }
+        return sum;
+    }
     @Override
     public int hashCode() {
         final int prime = 31;
