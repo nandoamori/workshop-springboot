@@ -2,6 +2,7 @@ package com.nandoamori.course.service;
 
 import com.nandoamori.course.entities.User;
 import com.nandoamori.course.repository.UserRepository;
+import com.nandoamori.course.service.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class UserService {
     }
     public User findById(Long id){
         Optional<User> user = userRepository.findById(id);
-        return user.get();
+        return user.orElseThrow(() -> new ResourceNotFoundException(id));
     }
 
     public User insert(User user){
